@@ -77,7 +77,6 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-
 @Composable
 fun EmployeeList(modifier: Modifier = Modifier.fillMaxSize()) {
 
@@ -85,16 +84,17 @@ fun EmployeeList(modifier: Modifier = Modifier.fillMaxSize()) {
         modifier = modifier,
     ) {
         items(getEmployees()) { employee ->
-            EmployeeCard(img = employee.img, name = employee.name, designation = employee.designation)
+            EmployeeCard(
+                img = employee.img,
+                name = employee.name,
+                designation = employee.designation
+            )
         }
     }
-
 }
-
 
 @Composable
 fun EmployeeCard(img: Int, name: String, designation: String, modifier: Modifier = Modifier) {
-
     Card(
         modifier = modifier
             .fillMaxWidth()
@@ -110,7 +110,6 @@ fun EmployeeCard(img: Int, name: String, designation: String, modifier: Modifier
                 .fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ) {
-
             Image(
                 painter = painterResource(img),
                 contentDescription = "Profile Image",
@@ -133,17 +132,9 @@ fun EmployeeCard(img: Int, name: String, designation: String, modifier: Modifier
                 )
                 Text(text = designation, style = MaterialTheme.typography.bodyMedium)
             }
-
         }
-
     }
 }
-
-
-
-
-
-
 
 @Preview(
     showBackground = true,
