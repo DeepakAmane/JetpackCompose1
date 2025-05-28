@@ -2,6 +2,9 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    id("kotlin-kapt")
+ //   id("com.google.devtools.ksp")
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -37,6 +40,11 @@ android {
     buildFeatures {
         compose = true
     }
+
+    kapt {
+        correctErrorTypes = true
+    }
+
 }
 
 dependencies {
@@ -56,4 +64,24 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+
+    // Retrofit
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+
+    // Coroutines
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
+
+
+    // Lifecycle ViewModel with coroutine support
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
+
+    // AsyncImage
+    implementation("io.coil-kt:coil-compose:2.4.0")
+
+    implementation("com.google.dagger:hilt-android:2.56.2")
+    kapt("com.google.dagger:hilt-compiler:2.56.2")
+
 }
