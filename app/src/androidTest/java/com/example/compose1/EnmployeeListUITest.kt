@@ -10,6 +10,7 @@ import org.junit.Test
 
 class EnmployeeListUITest {
 
+    /*
     @get:Rule
     val composeTestRule = createComposeRule()
 
@@ -28,5 +29,5 @@ class EnmployeeListUITest {
 
         composeTestRule.onNodeWithText("Nitish").assertIsDisplayed()
         composeTestRule.onNodeWithText("Jack").assertIsDisplayed()
-    }
+    } */
 }

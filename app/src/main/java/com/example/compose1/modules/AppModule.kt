@@ -25,7 +25,7 @@ object AppModule {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
-        Log.d("InstanceCheck", "Retrofit hash in AppModule: ${System.identityHashCode(retrofit)}")
+    //    Log.d("InstanceCheck", "Retrofit hash in AppModule: ${System.identityHashCode(retrofit)}")
         return retrofit
     }
 
@@ -33,7 +33,7 @@ object AppModule {
     @Singleton
     fun provideEmployeeApi(retrofit: Retrofit): EmployeeApi {
         val api = retrofit.create(EmployeeApi::class.java)
-        Log.d("InstanceCheck", "EmployeeApi hash in AppModule: ${System.identityHashCode(api)}")
+   //     Log.d("InstanceCheck", "EmployeeApi hash in AppModule: ${System.identityHashCode(api)}")
         return api
     }
 
@@ -41,7 +41,7 @@ object AppModule {
     @Singleton
     fun provideEmployeeRepository(api: EmployeeApi): EmployeeRepository {
         val repository = EmployeeRepository(api)
-        Log.d("InstanceCheck", "EmployeeRepository hash in AppModule: ${System.identityHashCode(repository)}")
+ //       Log.d("InstanceCheck", "EmployeeRepository hash in AppModule: ${System.identityHashCode(repository)}")
         return repository
     }
 
