@@ -9,14 +9,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.compose1.components.EmptyStateMessage
 import com.example.compose1.components.LoadingOverlay
-import com.example.compose1.model.Employee
 import com.example.compose1.viewmodel.EmployeeListViewModel
 import com.example.compose1.viewmodel.EmployeeUiState
 
@@ -25,7 +24,7 @@ fun EmployeeList(
     viewModel: EmployeeListViewModel,
     modifier: Modifier = Modifier,
 ) {
-    val uiState by viewModel.employeeUiState.collectAsState()
+    val uiState by viewModel.employeeUiState.collectAsStateWithLifecycle()
 
     /**
      *  contentPadding = PaddingValues(vertical = 8.dp)

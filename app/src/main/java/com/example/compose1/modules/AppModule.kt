@@ -1,12 +1,13 @@
 package com.example.compose1.modules
 
-import android.util.Log
+import com.example.compose1.network.AuthInterceptor
 import com.example.compose1.network.EmployeeApi
 import com.example.compose1.repository.EmployeeRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
@@ -19,13 +20,22 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideRetrofit(): Retrofit {
+    fun provideOkHttpClient(): OkHttpClient {
+        return OkHttpClient.Builder()
+            .addInterceptor(AuthInterceptor())
+            .build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideRetrofit(client: OkHttpClient): Retrofit {
         val retrofit = Retrofit.Builder()
             .baseUrl(BASE_URL)
+            .client(client)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
-    //    Log.d("InstanceCheck", "Retrofit hash in AppModule: ${System.identityHashCode(retrofit)}")
+        //    Log.d("InstanceCheck", "Retrofit hash in AppModule: ${System.identityHashCode(retrofit)}")
         return retrofit
     }
 
@@ -33,7 +43,7 @@ object AppModule {
     @Singleton
     fun provideEmployeeApi(retrofit: Retrofit): EmployeeApi {
         val api = retrofit.create(EmployeeApi::class.java)
-   //     Log.d("InstanceCheck", "EmployeeApi hash in AppModule: ${System.identityHashCode(api)}")
+        //     Log.d("InstanceCheck", "EmployeeApi hash in AppModule: ${System.identityHashCode(api)}")
         return api
     }
 
@@ -41,7 +51,7 @@ object AppModule {
     @Singleton
     fun provideEmployeeRepository(api: EmployeeApi): EmployeeRepository {
         val repository = EmployeeRepository(api)
- //       Log.d("InstanceCheck", "EmployeeRepository hash in AppModule: ${System.identityHashCode(repository)}")
+        //       Log.d("InstanceCheck", "EmployeeRepository hash in AppModule: ${System.identityHashCode(repository)}")
         return repository
     }
 

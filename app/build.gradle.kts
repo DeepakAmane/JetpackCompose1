@@ -1,10 +1,22 @@
+import java.util.Properties
+import java.io.FileInputStream
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     id("kotlin-kapt")
- //   id("com.google.devtools.ksp")
+    //   id("com.google.devtools.ksp")
     id("com.google.dagger.hilt.android")
+}
+
+val apikeyPropertiesFile = rootProject.file("apikey.properties")
+val apikeyProperties = Properties()
+
+if (apikeyPropertiesFile.exists()) {
+    apikeyProperties.load(FileInputStream(apikeyPropertiesFile))
+} else {
+    throw GradleException("apikey.properties file not found! Please create it with your API key.")
 }
 
 android {
@@ -19,6 +31,8 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField("String", "JSONBIN_API_KEY", "\"${apikeyProperties["JSONBIN_API_KEY"]}\"")
+        buildConfigField("String", "JSONBIN_BIN_ID", "\"${apikeyProperties["JSONBIN_BIN_ID"]}\"")
     }
 
     buildTypes {
@@ -39,6 +53,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 
     kapt {
