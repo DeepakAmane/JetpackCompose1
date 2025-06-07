@@ -22,8 +22,7 @@ jobs:
           java-version: 17
 
       - name: Decode keystore from GitHub Secrets
-        run: |
-          echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > app/keystore.jks
+        run: echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > app/keystore.jks
 
       - name: Generate apikey.properties
         run: |
