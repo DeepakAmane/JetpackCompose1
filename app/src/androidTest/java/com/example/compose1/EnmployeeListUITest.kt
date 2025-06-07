@@ -4,7 +4,7 @@ import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import com.example.compose1.model.Employee
-import com.example.compose1.view.EmployeeList
+
 import org.junit.Rule
 import org.junit.Test
 
