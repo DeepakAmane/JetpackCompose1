@@ -21,9 +21,9 @@ jobs:
           distribution: 'temurin'
           java-version: 17
 
-      - name: Decode keystore from base64
+      - name: Decode keystore from GitHub Secrets
         run: |
-          echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 -d > keystore.jks
+          echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > app/keystore.jks
 
       - name: Generate apikey.properties
         run: |
