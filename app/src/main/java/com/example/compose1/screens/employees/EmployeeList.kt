@@ -1,4 +1,4 @@
-package com.example.compose1.screens
+package com.example.compose1.screens.employees
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box

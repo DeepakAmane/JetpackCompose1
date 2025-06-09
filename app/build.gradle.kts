@@ -110,4 +110,16 @@ dependencies {
     implementation("com.google.dagger:hilt-android:2.56.2")
     kapt("com.google.dagger:hilt-compiler:2.56.2")
 
+
+    //Coil Image
+    implementation("io.coil-kt:coil-compose:2.5.0")
+
+    // Jetpack Compose Material icons
+    implementation("androidx.compose.material:material-icons-extended:1.6.1")
+
+    // Navigation Compose
+    implementation("androidx.navigation:navigation-compose:2.7.7")
+
+    // Hilt and Navigation Compose integration
+    implementation("androidx.hilt:hilt-navigation-compose:1.1.0")
 }

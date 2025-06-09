@@ -26,7 +26,7 @@ class EmployeeListViewModel @Inject constructor(private val repository: Employee
     }
 
     private fun fetchEmployees() {
-        //  Log.d("EmployeeViewModel", "API call triggered")
+          Log.d("EmployeeViewModel", "API call triggered")
         viewModelScope.launch {
             _employeeUiStateMutableStateFlow.value = EmployeeUiState.Loading
             try {
