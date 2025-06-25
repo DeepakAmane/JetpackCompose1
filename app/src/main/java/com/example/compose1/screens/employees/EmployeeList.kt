@@ -14,14 +14,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavController
 import com.example.compose1.components.EmptyStateMessage
 import com.example.compose1.components.LoadingOverlay
-import com.example.compose1.viewmodel.EmployeeListViewModel
-import com.example.compose1.viewmodel.EmployeeUiState
+import com.example.compose1.screens.Screen
+import com.example.compose1.viewmodel.employee.EmployeeListViewModel
+import com.example.compose1.viewmodel.employee.EmployeeUiState
 
 @Composable
 fun EmployeeList(
     viewModel: EmployeeListViewModel,
+    navController: NavController,
     modifier: Modifier = Modifier,
 ) {
     val uiState by viewModel.employeeUiState.collectAsStateWithLifecycle()
@@ -52,12 +55,17 @@ fun EmployeeList(
                 ) {
                     items(employees) { employee ->
                         EmployeeCard(
+                            employee = employee,
                             imageUrl = employee.imageUrl,
                             name = employee.name,
                             title = employee.title,
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(horizontal = 16.dp)
+                                .padding(horizontal = 16.dp),
+                            onClick = { clickedEmployee ->
+                                navController.currentBackStackEntry?.savedStateHandle?.set("employee", clickedEmployee)
+                                navController.navigate(Screen.EmployeeDetail.route)
+                            }
                         )
                     }
                 }

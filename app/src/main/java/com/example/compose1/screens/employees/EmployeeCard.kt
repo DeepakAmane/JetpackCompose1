@@ -1,6 +1,7 @@
 package com.example.compose1.screens.employees
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -26,17 +27,21 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import com.example.compose1.model.employee.Employee
 
 
 @Composable
 fun EmployeeCard(
+    employee: Employee,
     imageUrl: String,
     name: String,
     title: String,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onClick: (Employee) -> Unit
 ) {
     Card(
-        modifier = modifier,
+        modifier = modifier
+            .clickable { onClick(employee) },
         elevation = CardDefaults.elevatedCardElevation(defaultElevation = 4.dp)
     ) {
         Row(

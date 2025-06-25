@@ -1,4 +1,4 @@
-package com.example.compose1.viewmodel
+package com.example.compose1.viewmodel.employee
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
@@ -42,7 +42,8 @@ class EmployeeListViewModel @Inject constructor(private val repository: Employee
 
                 //       Log.d("VM", "Coroutine resumed after delay: ${Thread.currentThread().name}")
             } catch (e: Exception) {
-                _employeeUiStateMutableStateFlow.value = EmployeeUiState.Error(e.localizedMessage ?: "Unknown error")
+                _employeeUiStateMutableStateFlow.value =
+                    EmployeeUiState.Error(e.localizedMessage ?: "Unknown error")
                 Log.e("EmployeeViewModel", "Exception: ${e.message}")
             }
         }

@@ -1,6 +1,7 @@
+# Gradle
 *.iml
-.gradle
-/local.properties
+.gradle/
+local.properties
 /.idea/caches
 /.idea/libraries
 /.idea/modules.xml
@@ -8,9 +9,21 @@
 /.idea/navEditor.xml
 /.idea/assetWizardSettings.xml
 .DS_Store
-/build
-/captures
-.externalNativeBuild
-.cxx
-local.properties
-/apikey.properties
+/build/
+captures/
+.externalNativeBuild/
+.cxx/
+apikey.properties
+
+# Android Studio
+.idea/deploymentTargetSelector.xml
+.idea/codeStyles/
+
+# Output folders
+app/release/
+
+# Jetpack Compose Previews
+*.preview
+
+# OS-specific
+*.swp

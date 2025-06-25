@@ -8,6 +8,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -26,18 +27,13 @@ import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.core.view.WindowCompat
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.compose1.app_navigation.AppNavigation
 import com.example.compose1.extensions.setEdgeToEdge
 import com.example.compose1.screens.Screen
-import com.example.compose1.screens.employees.EmployeeList
-import com.example.compose1.screens.login.LoginScreen
 import com.example.compose1.ui.theme.DeepsCompose1Theme
-import com.example.compose1.viewmodel.EmployeeListViewModel
+import com.example.compose1.viewmodel.employee.EmployeeListViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -46,7 +42,7 @@ class MainActivity : ComponentActivity() {
     private val viewModel: EmployeeListViewModel by viewModels()
 
     @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
-    @OptIn(ExperimentalMaterial3Api::class)
+    @OptIn(ExperimentalMaterial3Api::class, ExperimentalAnimationApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -74,13 +70,18 @@ class MainActivity : ComponentActivity() {
                             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
                                 @Suppress("DEPRECATION")
                                 window.statusBarColor = Color(0xFFFF9800).toArgb()
+                                @Suppress("DEPRECATION")
+                                window.navigationBarColor = Color(0xFFFF9800).toArgb()
                             }
 
                             // Ensure icons are white (light content)
                             WindowCompat.getInsetsController(
                                 window,
                                 view
-                            ).isAppearanceLightStatusBars = false
+                            ).apply {
+                                isAppearanceLightStatusBars = false
+                                isAppearanceLightNavigationBars = false
+                            }
                         }
 
                         else -> {

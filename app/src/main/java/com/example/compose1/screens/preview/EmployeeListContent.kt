@@ -23,15 +23,17 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.compose1.model.Employee
+import com.example.compose1.model.employee.Employee
+import com.example.compose1.screens.Screen
 import com.example.compose1.screens.employees.EmployeeCard
 import com.example.compose1.ui.theme.DeepsCompose1Theme
-
+/*
 @Composable
 fun EmployeeListContent(
     employees: List<Employee>,
     isLoading: Boolean,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onItemClick: (Employee) -> Unit = {}
 ) {
 
     /**
@@ -58,7 +60,10 @@ fun EmployeeListContent(
                         title = employee.title,
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(horizontal = 16.dp)
+                            .padding(horizontal = 16.dp),
+                        onClick = { clickedEmployee ->
+                           println(clickedEmployee)
+                        }
                     )
                 }
             }
@@ -124,8 +129,12 @@ fun EmployeeListView() {
                 Employee("Jack Sparrow", "Software Engineer", "https://example.com/john.jpg"),
                 Employee("jane Junior", "Product Manager", "https://example.com/jane.jpg")
             ),
-            isLoading = false
+            isLoading = false,
+            onItemClick = {
+                println("Clicked on: ${it.name}")
+            }
         )
     }
 
 }
+ */

@@ -8,6 +8,7 @@ plugins {
     id("kotlin-kapt")
     //   id("com.google.devtools.ksp")
     id("com.google.dagger.hilt.android")
+    kotlin("plugin.parcelize")
 }
 
 val apikeyPropertiesFile = rootProject.file("apikey.properties")
@@ -122,4 +123,7 @@ dependencies {
 
     // Hilt and Navigation Compose integration
     implementation("androidx.hilt:hilt-navigation-compose:1.1.0")
+
+    // Transition effect
+    implementation("com.google.accompanist:accompanist-navigation-animation:0.34.0")
 }

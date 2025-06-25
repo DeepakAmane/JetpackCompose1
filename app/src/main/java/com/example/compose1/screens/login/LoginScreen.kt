@@ -1,5 +1,6 @@
 package com.example.compose1.screens.login
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -16,11 +17,14 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -32,35 +36,68 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import coil.size.Scale
 import com.example.compose1.R
+import com.example.compose1.components.LoadingOverlay
+import com.example.compose1.viewmodel.auth.LoginViewModel
+import com.example.compose1.viewmodel.auth.state.LoginUiState
+import com.example.compose1.viewmodel.employee.EmployeeUiState
 
 @Composable
-fun LoginScreen(modifier: Modifier = Modifier, onLoginSuccess: () -> Unit) {
+fun LoginScreen(
+    modifier: Modifier = Modifier,
+    viewModel: LoginViewModel = hiltViewModel(),
+    onLoginSuccess: () -> Unit
+) {
 
     var userName by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+    val context = LocalContext.current
+    val loginState by viewModel.loginState.collectAsStateWithLifecycle()
+
+    LaunchedEffect(loginState) {
+        when (loginState) {
+            is LoginUiState.Error -> {
+                Toast.makeText(
+                    context,
+                    (loginState as LoginUiState.Error).message,
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+
+            LoginUiState.Idle -> {
+
+            }
+
+            LoginUiState.Loading -> {
+            }
+
+            is LoginUiState.Success -> {
+                onLoginSuccess()
+            }
+        }
+    }
 
     Box(
         modifier = Modifier
             .fillMaxSize()
             .background(Color(0xFFFF9800))
             .imePadding(),
-        //   contentAlignment = Alignment.Center
-
     ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
                 .padding(horizontal = 16.dp, vertical = 16.dp),
-            //.padding(16.dp)
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         )
@@ -82,7 +119,6 @@ fun LoginScreen(modifier: Modifier = Modifier, onLoginSuccess: () -> Unit) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(200.dp),
-                // .padding(top = 16.dp),
                 model = ImageRequest.Builder(LocalContext.current)
                     .data(data = R.drawable.jetpack_compose_logo)
                     .crossfade(enable = true)
@@ -107,20 +143,24 @@ fun LoginScreen(modifier: Modifier = Modifier, onLoginSuccess: () -> Unit) {
 
             OutlinedTextField(
                 value = userName,
-                onValueChange = { userName = it },
+                onValueChange = {
+                    userName = it
+                },
                 label = { Text("User Name", color = Color(0xFF8A2BE2)) },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .defaultMinSize(56.dp),
-
-                )
+                    .defaultMinSize(56.dp)
+            )
 
             Spacer(modifier = Modifier.height(12.dp))
 
             OutlinedTextField(
                 value = password,
-                onValueChange = { password = it },
+                onValueChange = {
+                    password = it
+                },
                 label = { Text("Password", color = Color(0xFF8A2BE2)) },
+                visualTransformation = PasswordVisualTransformation(),
                 modifier = Modifier
                     .fillMaxWidth()
                     .defaultMinSize(56.dp)
@@ -129,7 +169,17 @@ fun LoginScreen(modifier: Modifier = Modifier, onLoginSuccess: () -> Unit) {
             Spacer(modifier = Modifier.height(24.dp))
 
             Button(
-                onClick = onLoginSuccess,
+                onClick = {
+                    if (userName.isBlank() || password.isBlank()) {
+                        Toast.makeText(
+                            context,
+                            "Please enter both username and password",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    } else {
+                        viewModel.login(userName.trim(), password.trim())
+                    }
+                },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(56.dp)
@@ -149,8 +199,13 @@ fun LoginScreen(modifier: Modifier = Modifier, onLoginSuccess: () -> Unit) {
 
                     )
             }
-
         }
+
+        // Show loader in center of screen
+        if (loginState is LoginUiState.Loading) {
+            LoadingOverlay() // No need for .align(...) here since it's full-screen
+        }
+
     }
 }
 

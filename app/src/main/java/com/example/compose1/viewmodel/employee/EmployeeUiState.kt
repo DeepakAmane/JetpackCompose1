@@ -1,6 +1,6 @@
-package com.example.compose1.viewmodel
+package com.example.compose1.viewmodel.employee
 
-import com.example.compose1.model.Employee
+import com.example.compose1.model.employee.Employee
 
 sealed class EmployeeUiState {
     data class Success(val employees: List<Employee>) : EmployeeUiState()

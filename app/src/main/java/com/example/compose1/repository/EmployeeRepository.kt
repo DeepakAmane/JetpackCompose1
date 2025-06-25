@@ -1,7 +1,7 @@
 package com.example.compose1.repository
 
 import android.util.Log
-import com.example.compose1.model.Employee
+import com.example.compose1.model.employee.Employee
 import com.example.compose1.network.EmployeeApi
 import kotlinx.coroutines.delay
 import javax.inject.Inject

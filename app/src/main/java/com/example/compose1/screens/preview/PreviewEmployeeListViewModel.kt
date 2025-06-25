@@ -1,8 +1,6 @@
 package com.example.compose1.screens.preview
 
-import com.example.compose1.model.Employee
-import com.example.compose1.repository.EmployeeRepository
-import com.example.compose1.viewmodel.EmployeeListViewModel
+import com.example.compose1.model.employee.Employee
 import kotlinx.coroutines.flow.MutableStateFlow
 
 class PreviewEmployeeListViewModel {
