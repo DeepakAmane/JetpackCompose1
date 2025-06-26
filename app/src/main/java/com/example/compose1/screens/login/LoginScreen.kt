@@ -203,7 +203,7 @@ fun LoginScreen(
 
         // Show loader in center of screen
         if (loginState is LoginUiState.Loading) {
-            LoadingOverlay() // No need for .align(...) here since it's full-screen
+            LoadingOverlay()
         }
 
     }
